@@ -1,28 +1,58 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+function renderApp(){
+    ReactDOM.render(
+        <Header />,
+        document.getElementById('root')
     );
-  }
 }
+
+let headerName = 'Hello';
+
+const handleNavLinkClick = (event) =>{
+    event.preventDefault();
+    // console.log(event.target.innerHTML);
+    const content = event.target.innerHTML;
+
+    headerName = content;
+    renderApp();
+};
+
+const Hello = () => {
+    return (
+        <div className={"some-class-name"} id="some-id">
+            <h1>{headerName}</h1>
+        </div>
+    );
+};
+
+const Navigation = () => {
+    const className = 'nav-link';
+    const linkClassName = `${className}-link`;
+
+    return (
+        <nav className={className}>
+            <ul>
+                <li><a className={linkClassName} href={"/"} onClick={handleNavLinkClick}>Home</a></li>
+                <li><a className={linkClassName} href={"/contact"} onClick={handleNavLinkClick}>Contact us</a></li>
+                <li><a className={linkClassName} href={"/about"} onClick={handleNavLinkClick}>About</a></li>
+            </ul>
+        </nav>
+    );
+};
+
+const Header = () => {
+    return(
+        <header>
+            <Hello />
+            <Navigation/>
+        </header>
+    )
+};
+
+renderApp();
 
 export default App;
