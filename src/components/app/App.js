@@ -1,10 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './style/index.css';
-import './style/app.css';
-import contacts from "./data/contacts";
+import ReactDOM from 'react-dom'
+import './App.css'
+import contacts from '../../data/contacts'
 
+const htmlArray = [];
 let currentlySelectedContactIndex = 0;
+
+const handleContactClick = (index) => {
+    currentlySelectedContactIndex = index;
+    render();
+};
+
+contacts.forEach((contact, index) => {
+    htmlArray.push(<div onClick={() => handleContactClick(index)} key={index} className="contact" data-id="id">
+            <span className="avatar small">&#9787;</span>
+            <span className="title">{contact.firstName} {contact.lastName}</span>
+        </div>
+    )
+});
 
 const Book = () => (
     <div className="container">
@@ -24,11 +37,8 @@ const Book = () => (
     </div>
 );
 
-const Contacts = () => (contacts.map((contact,index) =>
-    <div onClick={() => handleContactClick(index)} key={index} className="contact" data-id="id">
-        <span className="avatar small">&#9787;</span>
-        <span className="title">{contact.firstName} {contact.lastName}</span>
-    </div>)
+const Contacts = () => (
+    htmlArray
 );
 
 const Details = (prop) => (
@@ -44,8 +54,8 @@ const Details = (prop) => (
             </div>
         </div>
         <div className="info">
-            <span className="info-line">☎ {contacts[prop.index].phone}</span>
-            <span className="info-line">✉ {contacts[prop.index].email}</span>
+            <span className="info-line">&phone; {contacts[prop.index].phone}</span>
+            <span className="info-line">&#9993; {contacts[prop.index].email}</span>
         </div>
     </div>
 );
@@ -55,16 +65,4 @@ const render = () => ReactDOM.render(
     document.getElementById('root')
 );
 
-const handleContactClick = (index) => {
-    currentlySelectedContactIndex = index;
-    render();
-};
-
 render();
-
-// ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-//         serviceWorker.unregister();
